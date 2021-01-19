@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615501dbe4f3fe94fbf4b564abb10237, type: 3}
+  m_Name: ModConfig
+  m_EditorClassIdentifier: 
+  id: StableTimeSignatures
+  title: Stable Time Signatures
+  author: me
+  description: "A practice variant of Time Signatures that doesn't reset upon listening
+    to it again!\r\n\r\nOriginal module by KingBranBran which can be found at https://steamcommunity.com/sharedfiles/filedetails/?id=1942457475.\n\nAlso
+    thanks to KingBranBran for allowing me to do this.\r\n\nManual can be found at
+    ktane.timwi.de.\n\nIf there are any bugs, contact Fartlicker777#9169 on Discord."
+  version: 
+  outputFolder: build
+  previewImage: {fileID: 2800000, guid: e593366d9dae8ab4b83103ecbf4f0d86, type: 3}
