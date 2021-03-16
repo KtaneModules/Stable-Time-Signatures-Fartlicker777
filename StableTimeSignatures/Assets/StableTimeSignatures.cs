@@ -22,7 +22,7 @@ public class StableTimeSignatures : MonoBehaviour
 	private string currentState = "##";
 	private string redNumber = "#";
 
-	private string[] randomSequence = new string[5];
+	private string[] randomSequence = new string[3];
 	private int amountCorrect = 0;
 
 	private static int _moduleIdCounter = 1;
@@ -174,7 +174,7 @@ public class StableTimeSignatures : MonoBehaviour
 				DebugLog("...you haven't generated a sequence yet!");
 			}
 		}
-		if (amountCorrect == 5) StartCoroutine(ModuleSolve());
+		if (amountCorrect == 3) StartCoroutine(ModuleSolve());
 	}
 
 	void UpdateDisplayTo(string display)
@@ -271,7 +271,7 @@ public class StableTimeSignatures : MonoBehaviour
 
 
 		if (!PlayedOnce)
-			DebugLog("The sequence is [{0} {1}], [{2} {3}], [{4} {5}], [{6} {7}], [{8} {9}].", randomSequence[0][0], randomSequence[0][1], randomSequence[1][0], randomSequence[1][1], randomSequence[2][0], randomSequence[2][1], randomSequence[3][0], randomSequence[3][1], randomSequence[4][0], randomSequence[4][1]);
+			DebugLog("The sequence is [{0} {1}], [{2} {3}], [{4} {5}].", randomSequence[0][0], randomSequence[0][1], randomSequence[1][0], randomSequence[1][1], randomSequence[2][0], randomSequence[2][1]);
 
 		PlayedOnce = true;
 
