@@ -849,6 +849,8 @@ MonoBehaviour:
   buttonBack: {fileID: 1066972959629056}
   topButtonText: {fileID: 102190053016257720}
   bottomButtonText: {fileID: 102613359303220662}
+  randomSequenceTop: []
+  randomSequenceBottom: []
 --- !u!114 &114668239689921116
 MonoBehaviour:
   m_ObjectHideFlags: 1
