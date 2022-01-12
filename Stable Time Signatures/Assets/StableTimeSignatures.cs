@@ -399,4 +399,61 @@ public class StableTimeSignatures : MonoBehaviour {
             yield return "solve";
       }
    }
+   
+   IEnumerator TwitchHandleForcedSolve()
+   {
+       if (randomSequence[amountCorrect] == null)
+       {
+           while (!(currentState[0]+"").Equals(redNumber))
+           {
+               bottomButton.OnInteract();
+               yield return new WaitForSeconds(0.1f);
+               bottomButton.OnInteractEnded();
+               yield return new WaitForSeconds(0.1f);
+           }
+           topButton.OnInteract();
+           yield return new WaitForSeconds(0.1f);
+           topButton.OnInteractEnded();
+           yield return new WaitForSeconds(0.1f);
+       }
+       for(int i = amountCorrect; i < 5; i++)
+       {
+           if ((currentState[0] + "").Equals(redNumber))
+           {
+               bottomButton.OnInteract();
+               yield return new WaitForSeconds(0.1f);
+               bottomButton.OnInteractEnded();
+               yield return new WaitForSeconds(0.1f);
+           }
+           while (!(currentState[1] + "").Equals(randomSequence[i][1]+""))
+           {
+               topButton.OnInteract();
+               yield return new WaitForSeconds(0.1f);
+               topButton.OnInteractEnded();
+               yield return new WaitForSeconds(0.1f);
+           }
+           while (!(currentState[0] + "").Equals(randomSequence[i][0]+""))
+           {
+               bottomButton.OnInteract();
+               yield return new WaitForSeconds(0.1f);
+               bottomButton.OnInteractEnded();
+               yield return new WaitForSeconds(0.1f);
+           }
+           int rando = Random.Range(0, 2);
+           if(rando == 0 && !(currentState[0] + "").Equals(redNumber))
+           {
+               topButton.OnInteract();
+               while (!holding) { yield return true; }
+               topButton.OnInteractEnded();
+           }
+           else
+           {
+               bottomButton.OnInteract();
+               while (!holding) { yield return true; }
+               bottomButton.OnInteractEnded();
+           }
+           yield return new WaitForSeconds(0.1f);
+       }
+       while (!moduleSolved) { yield return true; }
+   }
 }
