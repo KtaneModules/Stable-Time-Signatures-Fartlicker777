@@ -143,9 +143,9 @@ public class StableTimeSignatures : MonoBehaviour {
       }
    }
 
-   void TwitchHandleForcedSolve () {
+   /*void TwitchHandleForcedSolve () {
       StartCoroutine(ModuleSolve());
-   }
+   }*/
 
    IEnumerator HoldChecker () {
       yield return new WaitForSeconds(.6f);
@@ -402,7 +402,7 @@ public class StableTimeSignatures : MonoBehaviour {
    
    IEnumerator TwitchHandleForcedSolve()
    {
-       if (randomSequence[amountCorrect] == null)
+       if (randomSequenceTop.Count() == 0)
        {
            while (!(currentState[0]+"").Equals(redNumber))
            {
@@ -416,7 +416,7 @@ public class StableTimeSignatures : MonoBehaviour {
            topButton.OnInteractEnded();
            yield return new WaitForSeconds(0.1f);
        }
-       for(int i = amountCorrect; i < 5; i++)
+       for(int i = amountCorrect; i < 3; i++)
        {
            if ((currentState[0] + "").Equals(redNumber))
            {
@@ -425,14 +425,14 @@ public class StableTimeSignatures : MonoBehaviour {
                bottomButton.OnInteractEnded();
                yield return new WaitForSeconds(0.1f);
            }
-           while (!(currentState[1] + "").Equals(randomSequence[i][1]+""))
+           while (!(currentState[1] + "").Equals(randomSequenceBottom[i]))
            {
                topButton.OnInteract();
                yield return new WaitForSeconds(0.1f);
                topButton.OnInteractEnded();
                yield return new WaitForSeconds(0.1f);
            }
-           while (!(currentState[0] + "").Equals(randomSequence[i][0]+""))
+           while (!(currentState[0] + "").Equals(randomSequenceTop[i]))
            {
                bottomButton.OnInteract();
                yield return new WaitForSeconds(0.1f);
