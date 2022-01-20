@@ -35,6 +35,8 @@ public class StableTimeSignatures : MonoBehaviour {
    private Coroutine buttonHold;
    private bool holding = false;
 
+   bool okayExishThisModuleHasSolved;
+
    bool PlayedOnce = false;
 
    int GoalNumber;
@@ -275,6 +277,7 @@ public class StableTimeSignatures : MonoBehaviour {
       bottomButtonText.color = new Color(0, .58f, 0);
       UpdateDisplayTo("✓✓");
       module.HandlePass();
+      okayExishThisModuleHasSolved = true;
       DebugLog("Module solved!");
    }
 
@@ -454,6 +457,6 @@ public class StableTimeSignatures : MonoBehaviour {
            }
            yield return new WaitForSeconds(0.1f);
        }
-       while (!moduleSolved) { yield return true; }
+       while (!okayExishThisModuleHasSolved) { yield return true; }
    }
 }
