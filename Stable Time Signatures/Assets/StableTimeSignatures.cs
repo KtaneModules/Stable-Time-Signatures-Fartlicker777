@@ -416,7 +416,7 @@ public class StableTimeSignatures : MonoBehaviour {
            topButton.OnInteractEnded();
            yield return new WaitForSeconds(0.1f);
        }
-       for(int i = amountCorrect; i < 3; i++)
+       for(int i = amountCorrect; i < Settings.Amount; i++)
        {
            if ((currentState[0] + "").Equals(redNumber))
            {
