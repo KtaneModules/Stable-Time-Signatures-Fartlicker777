@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Text.RegularExpressions;
 using Random = UnityEngine.Random;
 
 public class StableTimeSignatures : MonoBehaviour {
@@ -43,9 +44,8 @@ public class StableTimeSignatures : MonoBehaviour {
 
    private Coroutine playingSound;
    #region ModSettings
-
-   StableTimeSignaturesSettings Settings = new StableTimeSignaturesSettings();
-#pragma warning disable 414
+      StableTimeSignaturesSettings Settings = new StableTimeSignaturesSettings();
+   #pragma warning disable 414
    private static Dictionary<string, object>[] TweaksEditorSettings = new Dictionary<string, object>[]
    {
       new Dictionary<string, object>
@@ -76,6 +76,20 @@ public class StableTimeSignatures : MonoBehaviour {
       ModConfig<StableTimeSignaturesSettings> modConfig = new ModConfig<StableTimeSignaturesSettings>("StableTimeSignaturesSettings");
       Settings = modConfig.Read();
       GoalNumber = Settings.Amount;
+
+      string missionDesc = KTMissionGetter.Mission.Description;
+      if (missionDesc != null) {
+         Regex regex = new Regex(@"\[Stable Time Signatures\] (TS=\d{1,4})");
+         var match = regex.Match(missionDesc);
+         if (match.Success) {
+            string[] options = match.Value.Replace("[Stable Time Signatures] TS=", "").Split(',');
+            int value = 3;
+            int.TryParse(options[0], out value);
+
+            GoalNumber = value;
+         }
+      }
+
       if (GoalNumber < 1) {
          GoalNumber = 3;
          Settings.Amount = 3;
@@ -402,61 +416,52 @@ public class StableTimeSignatures : MonoBehaviour {
             yield return "solve";
       }
    }
-   
-   IEnumerator TwitchHandleForcedSolve()
-   {
-       if (randomSequenceTop.Count() == 0)
-       {
-           while (!(currentState[0]+"").Equals(redNumber))
-           {
-               bottomButton.OnInteract();
-               yield return new WaitForSeconds(0.1f);
-               bottomButton.OnInteractEnded();
-               yield return new WaitForSeconds(0.1f);
-           }
-           topButton.OnInteract();
-           yield return new WaitForSeconds(0.1f);
-           topButton.OnInteractEnded();
-           yield return new WaitForSeconds(0.1f);
-       }
-       for(int i = amountCorrect; i < Settings.Amount; i++)
-       {
-           if ((currentState[0] + "").Equals(redNumber))
-           {
-               bottomButton.OnInteract();
-               yield return new WaitForSeconds(0.1f);
-               bottomButton.OnInteractEnded();
-               yield return new WaitForSeconds(0.1f);
-           }
-           while (!(currentState[1] + "").Equals(randomSequenceBottom[i]))
-           {
-               topButton.OnInteract();
-               yield return new WaitForSeconds(0.1f);
-               topButton.OnInteractEnded();
-               yield return new WaitForSeconds(0.1f);
-           }
-           while (!(currentState[0] + "").Equals(randomSequenceTop[i]))
-           {
-               bottomButton.OnInteract();
-               yield return new WaitForSeconds(0.1f);
-               bottomButton.OnInteractEnded();
-               yield return new WaitForSeconds(0.1f);
-           }
-           int rando = Random.Range(0, 2);
-           if(rando == 0 && !(currentState[0] + "").Equals(redNumber))
-           {
-               topButton.OnInteract();
-               while (!holding) { yield return true; }
-               topButton.OnInteractEnded();
-           }
-           else
-           {
-               bottomButton.OnInteract();
-               while (!holding) { yield return true; }
-               bottomButton.OnInteractEnded();
-           }
-           yield return new WaitForSeconds(0.1f);
-       }
-       while (!okayExishThisModuleHasSolved) { yield return true; }
+
+   IEnumerator TwitchHandleForcedSolve () {
+      if (randomSequenceTop.Count() == 0) {
+         while (!(currentState[0] + "").Equals(redNumber)) {
+            bottomButton.OnInteract();
+            yield return new WaitForSeconds(0.1f);
+            bottomButton.OnInteractEnded();
+            yield return new WaitForSeconds(0.1f);
+         }
+         topButton.OnInteract();
+         yield return new WaitForSeconds(0.1f);
+         topButton.OnInteractEnded();
+         yield return new WaitForSeconds(0.1f);
+      }
+      for (int i = amountCorrect; i < Settings.Amount; i++) {
+         if ((currentState[0] + "").Equals(redNumber)) {
+            bottomButton.OnInteract();
+            yield return new WaitForSeconds(0.1f);
+            bottomButton.OnInteractEnded();
+            yield return new WaitForSeconds(0.1f);
+         }
+         while (!(currentState[1] + "").Equals(randomSequenceBottom[i])) {
+            topButton.OnInteract();
+            yield return new WaitForSeconds(0.1f);
+            topButton.OnInteractEnded();
+            yield return new WaitForSeconds(0.1f);
+         }
+         while (!(currentState[0] + "").Equals(randomSequenceTop[i])) {
+            bottomButton.OnInteract();
+            yield return new WaitForSeconds(0.1f);
+            bottomButton.OnInteractEnded();
+            yield return new WaitForSeconds(0.1f);
+         }
+         int rando = Random.Range(0, 2);
+         if (rando == 0 && !(currentState[0] + "").Equals(redNumber)) {
+            topButton.OnInteract();
+            while (!holding) { yield return true; }
+            topButton.OnInteractEnded();
+         }
+         else {
+            bottomButton.OnInteract();
+            while (!holding) { yield return true; }
+            bottomButton.OnInteractEnded();
+         }
+         yield return new WaitForSeconds(0.1f);
+      }
+      while (!okayExishThisModuleHasSolved) { yield return true; }
    }
 }
